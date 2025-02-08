@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande de CV Professionnel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+    <script>
+        function ajouterFormation() {
+            let container = document.getElementById("formations");
+            let div = document.createElement("div");
+            div.innerHTML = '<input type="text" name="diplome[]" placeholder="Diplôme obtenu" required> ' +
+                            '<input type="text" name="ecole[]" placeholder="École/Université" required> ' +
+                            '<input type="text" name="annee[]" placeholder="Année d’obtention" required> ' +
+                            '<button type="button" onclick="this.parentElement.remove()">Supprimer</button>';
+            container.appendChild(div);
+        }
+        
+        function ajouterExperience() {
+            let container = document.getElementById("experiences");
+            let div = document.createElement("div");
+            div.innerHTML = '<input type="text" name="entreprise[]" placeholder="Entreprise" required> ' +
+                            '<input type="text" name="lieu[]" placeholder="Lieu" required> ' +
+                            '<input type="text" name="date[]" placeholder="Dates (ex: 2020-2022)" required> ' +
+                            '<input type="text" name="poste[]" placeholder="Poste occupé" required> ' +
+                            '<textarea name="missions[]" placeholder="Missions réalisées" required></textarea> ' +
+                            '<button type="button" onclick="this.parentElement.remove()">Supprimer</button>';
+            container.appendChild(div);
+        }
+
+        function toggleCvUpload() {
+            let serviceType = document.getElementById("service_type").value;
+            let newCvFields = document.getElementById("new_cv_fields");
+            let uploadCvField = document.getElementById("upload_cv_field");
+            let photoCvField = document.getElementById("photo_cv_field");
+            
+            if (serviceType === "creation") {
+                newCvFields.style.display = "block";
+                uploadCvField.style.display = "none";
+                photoCvField.style.display = "block";
+            } else {
+                newCvFields.style.display = "none";
+                uploadCvField.style.display = "block";
+                photoCvField.style.display = "block";
+            }
+        }
+
+        function afficherMessageConfirmation(event) {
+            event.preventDefault();
+            alert("Merci pour votre confiance ! Votre commande sera traitée dans un délai de 24h à 48h. Vous serez contacté(e) au plus tôt pour assurer le bon suivi de votre demande.");
+            event.target.submit();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Bienvenue sur notre service de création et d’optimisation de CV</h2>
+        <p>Nous sommes ravis de vous accompagner dans votre recherche d'emploi en vous offrant un CV professionnel et optimisé pour les recruteurs.</p>
+        
+        <form action="https://formspree.io/f/safiatoudona@gmail.com" method="POST" enctype="multipart/form-data" onsubmit="afficherMessageConfirmation(event)">
+            <h3>Type de Service</h3>
+            <select id="service_type" name="service_type" onchange="toggleCvUpload()" required>
+                <option value="creation">Création d'un nouveau CV</option>
+                <option value="correction">Correction et nouvelle mise en page d'un CV existant</option>
+            </select>
+            
+            <div id="upload_cv_field" style="display: none;">
+                <h3>Uploader votre CV existant</h3>
+                <input type="file" name="cv_existant" accept=".pdf,.doc,.docx">
+            </div>
+
+            <div id="photo_cv_field">
+                <h3>Photo pour le CV</h3>
+                <input type="file" name="photo_cv" accept="image/*">
+            </div>
+
+            <div id="new_cv_fields">
+                <h3>Informations Personnelles</h3>
+                <input type="text" name="nom" placeholder="Nom et Prénom" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="whatsapp" placeholder="Numéro WhatsApp" required>
+                <input type="text" name="situation_matrimoniale" placeholder="Situation matrimoniale" required>
+                <input type="text" name="lieu_habitation" placeholder="Lieu d’habitation" required>
+                <input type="date" name="date_naissance" required>
+                <input type="text" name="nationalite" placeholder="Nationalité" required>
+
+              <h3>Poste Recherché et secteur d'activité</h3>
+                <input type="text" name="poste_recherche" placeholder="Poste recherché" required>
+                <input type="text" name="secteur_activite" placeholder="Secteur d'activité" required>
+
+              <h3>Compétences</h3>
+                <input type="text" name="competences" placeholder="Compétences" required>
+                
+                <h3>Expériences Professionnelles</h3>
+                <div id="experiences"></div>
+                <button type="button" onclick="ajouterExperience()">Ajouter une expérience</button>
+                
+                <h3>Formations et Diplômes</h3>
+                <div id="formations"></div>
+                <button type="button" onclick="ajouterFormation()">Ajouter une formation</button>
+                
+                <h3>Langues Parlées</h3>
+                <input type="text" name="langues" placeholder="Langues et niveaux" required>
+                
+                <h3>Loisirs</h3>
+                <input type="text" name="loisirs" placeholder="Loisirs" required>
+            </div>
+            
+            <h3>Preuve du paiement</h3>
+            <p>Montant unique de 1500 FCFA sur Wave au 05 64 23 33 85 ou Orange Money au 07 88 37 39 65</p>
+            <input type="file" name="preuve_paiement" accept="image/*" required>
+            
+            <button type="submit">Envoyer la commande</button>
+        </form>
+    </div>
+</body>
+</html>
